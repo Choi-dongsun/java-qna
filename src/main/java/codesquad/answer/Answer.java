@@ -1,7 +1,6 @@
 package codesquad.answer;
 
 import codesquad.AbstractEntity;
-import codesquad.exception.Result;
 import codesquad.question.Question;
 import codesquad.user.User;
 import javax.persistence.*;
