@@ -26,6 +26,10 @@ public class AbstractEntity {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getFormattedCreatedDate() {
         return getFormattedDate(createdDate, "yyyy.MM.dd HH:mm:ss");
     }

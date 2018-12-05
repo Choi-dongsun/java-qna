@@ -78,7 +78,9 @@ public class QuestionController {
         if (isValid(model, resultOfSessioned)) return "/user/login";
 
         User sessionedUser = SessionUtil.getUserFromSession(session);
-        Result result = question.update(updatedQuestion, sessionedUser);
+        Result result = question.update(updatedQuestion, sessionedUser) ?
+                Result.success() : Result.fail("You can't edit the other user's question");
+
         if (isValid(model, result)) return "/user/login";
 
         questionRepository.save(question);
@@ -94,7 +96,9 @@ public class QuestionController {
 
         model.addAttribute("question", questionRepository.findById(id).get());
         User sessionedUser = SessionUtil.getUserFromSession(session);
-        Result result = question.delete(sessionedUser);
+        Result result = question.delete(sessionedUser) ?
+                Result.success() : Result.fail("You can't edit the question");
+
         if (isValid(model, result)) return "/qna/show";
 
         questionRepository.save(question);

@@ -2,7 +2,6 @@ package codesquad.question;
 
 import codesquad.AbstractEntity;
 import codesquad.answer.Answer;
-import codesquad.exception.Result;
 import codesquad.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
@@ -95,32 +94,34 @@ public class Question extends AbstractEntity {
         this.countOfAnswer = countOfAnswer;
     }
 
-    Result update(Question updatedQuestion, User sessionedUser) {
-        if(!isSameWriter(sessionedUser)) {
-           return Result.fail("You can't edit the other user's question");
-        }
+    boolean update(Question updatedQuestion, User sessionedUser) {
+        if(!isSameWriter(sessionedUser)) return false;
 
         this.setTitle(updatedQuestion.getTitle());
         this.setContents(updatedQuestion.getContents());
-        return Result.success();
+        return true;
     }
 
-    Result delete(User sessionedUser) {
-        if(!isSameWriter(sessionedUser)) {
-            return Result.fail("You can't edit the other user's question");
+    boolean delete(User sessionedUser) {
+        if(!isSameWriter(sessionedUser)) return false;
+        if (answers != null) {
+            if (isExistAnswers(sessionedUser)) return false;
         }
+        this.deleted = true;
 
-        if (answers == null) this.deleted = true;
+        return true;
+    }
+
+    private boolean isExistAnswers(User sessionedUser) {
         for (Answer answer : answers) {
             if (!answer.isSameWriter(writer)) {
                 if(answer.isDeleted()) continue;
-                return Result.fail("Because the other user's answer exist, you can't edit the question.");
+                return true;
             }
         }
         for (Answer answer : answers) answer.delete(sessionedUser);
-        this.deleted = true;
 
-        return Result.success();
+        return false;
     }
 
     public boolean isSameWriter(User sessionedUser) {

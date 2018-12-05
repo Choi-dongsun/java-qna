@@ -17,6 +17,16 @@ public class User extends AbstractEntity {
     @Column(nullable=false, length=50)
     private String email;
 
+    public User() {
+    }
+
+    public User(String userId, String password, String name, String email) {
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -59,17 +69,13 @@ public class User extends AbstractEntity {
         return this.getId() == id;
     }
 
-    public boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
-    }
-
     boolean matchPassword(String password) {
         return this.password.equals(password);
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "user{" +
                 super.toString() +
                 "userId='" + userId + '\'' +
                 ", password='" + password + '\'' +
