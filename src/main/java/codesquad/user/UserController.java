@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/form")
     public String form() {
-        return "user/form";
+        return "/user/form";
     }
 
     @PostMapping("/create")
@@ -29,13 +29,13 @@ public class UserController {
     @GetMapping("")
     public String list(Model model) {
         model.addAttribute("users", users);
-        return "user/list";
+        return "/user/list";
     }
 
     @GetMapping("{userId}")
     public String profile(@PathVariable String userId, Model model) {
         model.addAttribute("user", matchUser(userId));
-        return "user/profile";
+        return "/user/profile";
     }
 
     private User matchUser(@PathVariable String userId) {
