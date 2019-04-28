@@ -20,7 +20,7 @@ public class UserController {
         return "/user/form";
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public String create(User user) {
         users.add(user);
         return "redirect:/users";
@@ -38,7 +38,7 @@ public class UserController {
         return "/user/profile";
     }
 
-    private User matchUser(@PathVariable String userId) {
+    private User matchUser(String userId) {
         for (User user : users) {
             if(user.isSameUser(userId)) return user;
         }
