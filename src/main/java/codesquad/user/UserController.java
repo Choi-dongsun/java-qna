@@ -32,10 +32,22 @@ public class UserController {
         return "/user/list";
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public String profile(@PathVariable String userId, Model model) {
         model.addAttribute("user", matchUser(userId));
         return "/user/profile";
+    }
+
+    @GetMapping("/{userId}/form")
+    public String updateForm(@PathVariable String userId, Model model) {
+        model.addAttribute("user", matchUser(userId));
+        return "/user/updateForm";
+    }
+
+    @PostMapping("/{id}") // userId로 받을 시, post로 넘어오는 name="userId"와 동일하기 때문에, 다르게 바꿨다.
+    public String update(@PathVariable String id, User updatedUser) {
+        matchUser(id).updateProfile(updatedUser);
+        return "redirect:/users";
     }
 
     private User matchUser(String userId) {

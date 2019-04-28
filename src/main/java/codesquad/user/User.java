@@ -42,6 +42,13 @@ public class User {
         return this.userId.equals(userId);
     }
 
+    public void updateProfile(User updatedUser) {
+        if (this.password.equals(updatedUser.password)) {
+            setName(updatedUser.name);
+            setEmail(updatedUser.email);
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -51,4 +58,5 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }
