@@ -1,19 +1,15 @@
 package codesquad.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("users")
 public class UserController {
-    List<User> users = new ArrayList<>();
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/form")
     public String form() {
@@ -22,39 +18,33 @@ public class UserController {
 
     @PostMapping("")
     public String create(User user) {
-        users.add(user);
+        userRepository.save(user);
         return "redirect:/users";
     }
 
     @GetMapping("")
     public String list(Model model) {
-        model.addAttribute("users", users);
+        model.addAttribute("users", userRepository.findAll());
         return "/user/list";
     }
 
-    @GetMapping("/{userId}")
-    public String profile(@PathVariable String userId, Model model) {
-        model.addAttribute("user", matchUser(userId));
+    @GetMapping("/{id}")
+    public String profile(@PathVariable Long id, Model model) {
+        model.addAttribute("user", userRepository.findById(id).get());
         return "/user/profile";
     }
 
-    @GetMapping("/{userId}/form")
-    public String updateForm(@PathVariable String userId, Model model) {
-        model.addAttribute("user", matchUser(userId));
+    @GetMapping("/{id}/form")
+    public String updateForm(@PathVariable Long id, Model model) {
+        model.addAttribute("user", userRepository.findById(id).get());
         return "/user/updateForm";
     }
 
-    @PostMapping("/{id}") // userId로 받을 시, post로 넘어오는 name="userId"와 동일하기 때문에, 다르게 바꿨다.
-    public String update(@PathVariable String id, User updatedUser) {
-        matchUser(id).updateProfile(updatedUser);
+    @PutMapping("/{id}")
+    public String update(@PathVariable Long id, User updatedUser) {
+        User user = userRepository.findById(id).get();
+        user.update(updatedUser);
+        userRepository.save(user);
         return "redirect:/users";
     }
-
-    private User matchUser(String userId) {
-        for (User user : users) {
-            if(user.isSameUser(userId)) return user;
-        }
-        return null;
-    }
-
 }
