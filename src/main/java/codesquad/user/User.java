@@ -1,10 +1,31 @@
 package codesquad.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column(nullable = false, length = 20)
     private String userId;
+    @Column(nullable = false, length = 20)
     private String password;
+    @Column(nullable = false, length = 12)
     private String name;
+    @Column(nullable = false, length = 30)
     private String email;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;
@@ -38,11 +59,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean isSameUser(String userId) {
-        return this.userId.equals(userId);
-    }
-
-    public void updateProfile(User updatedUser) {
+    public void update(User updatedUser) {
         if (this.password.equals(updatedUser.password)) {
             setName(updatedUser.name);
             setEmail(updatedUser.email);
@@ -52,11 +69,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userId='" + userId + '\'' +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
-
 }

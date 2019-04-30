@@ -1,19 +1,15 @@
 package codesquad.qna;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/questions")
 public class QnaController {
-    List<Question> questions = new ArrayList<>();
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @GetMapping("/form")
     public String form() {
@@ -22,20 +18,33 @@ public class QnaController {
 
     @PostMapping("")
     public String create(Question question) {
-        question.setId(questions.size() + 1);
-        questions.add(question);
+        questionRepository.save(question);
         return "redirect:/";
     }
 
     @GetMapping("")
     public String list(Model model) {
-        model.addAttribute("questions", questions);
+        model.addAttribute("questions", questionRepository.findAll());
         return "/index";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable String id, Model model) {
-        model.addAttribute("question" , questions.get(Integer.parseInt(id) - 1));
+    public String show(@PathVariable Long id, Model model) {
+        model.addAttribute("question" , questionRepository.findById(id).get());
         return "/qna/show";
+    }
+
+    @GetMapping("/{id}/form")
+    public String updateForm(@PathVariable Long id, Model model) {
+        model.addAttribute("question", questionRepository.findById(id).get());
+        return "/qna/updateForm";
+    }
+
+    @PutMapping("/{id}")
+    public String update(@PathVariable Long id, Question updatedQuestion) {
+        Question question = questionRepository.findById(id).get();
+        question.update(updatedQuestion);
+        questionRepository.save(question);
+        return "redirect:/questions";
     }
 }
