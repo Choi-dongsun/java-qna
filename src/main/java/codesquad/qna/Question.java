@@ -1,16 +1,24 @@
 package codesquad.qna;
 
+import javax.persistence.*;
+
+@Entity
 public class Question {
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column(nullable = false, length = 20)
     private String writer;
+    @Column(nullable = false, length = 30)
     private String title;
+    @Lob
     private String contents;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
