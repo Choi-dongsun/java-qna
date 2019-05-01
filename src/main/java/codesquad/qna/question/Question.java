@@ -1,4 +1,4 @@
-package codesquad.qna;
+package codesquad.qna.question;
 
 import javax.persistence.*;
 
@@ -13,6 +13,16 @@ public class Question {
     private String title;
     @Lob
     private String contents;
+
+    public Question() {
+    }
+
+    public Question(String writer, String title, String contents) {
+        super();
+        this.writer = writer;
+        this.title = title;
+        this.contents = contents;
+    }
 
     public Long getId() {
         return id;
@@ -53,7 +63,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{" +
+        return "question{" +
                 "id='" + id + '\'' +
                 ", writer='" + writer + '\'' +
                 ", title='" + title + '\'' +

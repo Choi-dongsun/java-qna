@@ -1,24 +1,29 @@
-package codesquad.qna;
+package codesquad.qna.question;
 
+import codesquad.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/questions")
-public class QnaController {
+public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
 
     @GetMapping("/form")
-    public String form() {
+    public String form(HttpSession session) {
+        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
         return "/qna/form";
     }
 
     @PostMapping("")
-    public String create(Question question) {
-        questionRepository.save(question);
+    public String create(String title, String contents, HttpSession session) {
+        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
+        questionRepository.save(new Question(SessionUtil.getUserFromSession(session).getUserId(), title, contents));
         return "redirect:/";
     }
 
