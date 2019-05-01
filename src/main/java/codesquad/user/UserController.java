@@ -58,13 +58,33 @@ public class UserController {
     }
 
     @GetMapping("/{id}/form")
-    public String updateForm(@PathVariable Long id, Model model) {
+    public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
+        Object tempUser = session.getAttribute("loginUser");
+        if(tempUser == null) {
+            return "redirect:/users/loginForm";
+        }
+
+        User loginUser = (User) tempUser;
+        if(!id.equals(loginUser.getId())) {
+            throw new IllegalStateException("You can't access other user's info");
+        }
+
         model.addAttribute("user", userRepository.findById(id).get());
         return "/user/updateForm";
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, User updatedUser) {
+    public String update(@PathVariable Long id, User updatedUser, HttpSession session) {
+        Object tempUser = session.getAttribute("loginUser");
+        if(tempUser == null) {
+            return "redirect:/users/loginForm";
+        }
+
+        User loginUser = (User) tempUser;
+        if(!id.equals(loginUser.getId())) {
+            throw new IllegalStateException("You can't access other user's info");
+        }
+
         User user = userRepository.findById(id).get();
         user.update(updatedUser);
         userRepository.save(user);

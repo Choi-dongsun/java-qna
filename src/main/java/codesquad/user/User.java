@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String userId;
     @Column(nullable = false, length = 20)
     private String password;
