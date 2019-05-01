@@ -66,7 +66,17 @@ public class User {
         }
     }
 
+    public boolean matchId(Long inputId) {
+        if (inputId == null) {
+            return false;
+        }
+        return this.id.equals(inputId);
+    }
+
     public boolean matchPassword(User inputUser) {
+        if (inputUser == null) {
+            return false;
+        }
         return this.password.equals(inputUser.password);
     }
 
