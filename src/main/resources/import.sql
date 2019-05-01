@@ -1,0 +1,2 @@
+INSERT INTO USER (id, user_id, password, name, email) VALUES (1, 'movingline', '123456', '동선', 'movinglinecheck@gmail.com');
+INSERT INTO USER (id, user_id, password, name, email) VALUES (2, 'zingoworks', '123456', '진산', 'zingworks@gmail.com');
