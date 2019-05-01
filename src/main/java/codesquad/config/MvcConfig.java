@@ -13,7 +13,5 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
         //아직 구현 못한 URL을 html 파일에 임시매핑. 구현시 삭제할 것.
         registry.addViewController("/").setViewName("/questions");
-        registry.addViewController("/users/login").setViewName("user/login");
-        registry.addViewController("/questions/form").setViewName("qna/form");
     }
 }

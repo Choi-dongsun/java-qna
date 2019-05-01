@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -20,6 +22,21 @@ public class UserController {
     public String create(User user) {
         userRepository.save(user);
         return "redirect:/users";
+    }
+
+    @GetMapping("/loginForm")
+    public String loginForm() {
+        return "/user/login";
+    }
+
+    @PostMapping("/login")
+    public String login(User inputUser, HttpSession session) {
+        User user = userRepository.findByUserId(inputUser.getUserId());
+        if(user == null || !user.matchPassword(inputUser)) {
+            return "redirect:/users/loginForm";
+        }
+        session.setAttribute("loginUser", user);
+        return "redirect:/";
     }
 
     @GetMapping("")
