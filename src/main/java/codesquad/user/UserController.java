@@ -1,6 +1,8 @@
 package codesquad.user;
 
 import codesquad.util.SessionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import static codesquad.util.SessionUtil.USER_SESSION_KEY;
 @Controller
 @RequestMapping("/users")
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -34,6 +38,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(User inputUser, HttpSession session) {
+        log.debug("updatedUser : {}", inputUser);
         User user = userRepository.findByUserId(inputUser.getUserId()).orElse(null);
         if(user == null || !user.matchPassword(inputUser)) {
             return "redirect:/users/loginForm";
@@ -73,6 +78,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public String update(@PathVariable Long id, User updatedUser, HttpSession session) {
+        log.debug("updatedUser : {}", updatedUser);
         if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
         if(!SessionUtil.getUserFromSession(session).matchId(id)) {
             throw new IllegalStateException("You can't access other user's info");

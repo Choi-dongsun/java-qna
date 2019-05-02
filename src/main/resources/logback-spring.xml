@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] [%logger{36}] - %m%n</Pattern>
+        </layout>
+    </appender>
+
+<!--     자바 패키지별 level 설정 -->
+    <logger name="codesquad.qna" level="DEBUG" />
+    <logger name="codesquad.user" level="DEBUG" />
+
+    <!-- 기본 level 설정 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
