@@ -80,6 +80,13 @@ public class User {
         return this.password.equals(inputUser.password);
     }
 
+    public boolean matchUserId(String inputUserId) {
+        if (inputUserId == null) {
+            return false;
+        }
+        return this.userId.equals(inputUserId);
+    }
+
     @Override
     public String toString() {
         return "User{" +

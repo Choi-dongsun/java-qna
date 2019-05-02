@@ -62,4 +62,15 @@ public class QuestionController {
         questionRepository.save(question);
         return "redirect:/questions";
     }
+
+    @DeleteMapping("/{userId}")
+    public String delete(@PathVariable String userId, HttpSession session) {
+        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
+        if(!SessionUtil.getUserFromSession(session).matchUserId(userId)) {
+            throw new IllegalStateException("You can't access other user's info");
+        }
+
+        questionRepository.delete(questionRepository.findByWriter(userId).orElseThrow(IllegalArgumentException::new));
+        return "redirect:/";
+    }
 }
