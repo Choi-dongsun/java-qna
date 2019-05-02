@@ -35,19 +35,29 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable Long id, Model model) {
-        model.addAttribute("question" , questionRepository.findById(id).get());
+        model.addAttribute("question" , questionRepository.findById(id).orElseThrow(IllegalArgumentException::new));
         return "/qna/show";
     }
 
     @GetMapping("/{id}/form")
-    public String updateForm(@PathVariable Long id, Model model) {
-        model.addAttribute("question", questionRepository.findById(id).get());
+    public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
+        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
+        if(!SessionUtil.getUserFromSession(session).matchId(id)) {
+            throw new IllegalStateException("You can't access other user's info");
+        }
+
+        model.addAttribute("question", questionRepository.findById(id).orElseThrow(IllegalArgumentException::new));
         return "/qna/updateForm";
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, Question updatedQuestion) {
-        Question question = questionRepository.findById(id).get();
+    public String update(@PathVariable Long id, Question updatedQuestion, HttpSession session) {
+        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
+        if(!SessionUtil.getUserFromSession(session).matchId(id)) {
+            throw new IllegalStateException("You can't access other user's info");
+        }
+
+        Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         question.update(updatedQuestion);
         questionRepository.save(question);
         return "redirect:/questions";
