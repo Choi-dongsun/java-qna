@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String userId;
     @Column(nullable = false, length = 20)
     private String password;
@@ -64,6 +64,27 @@ public class User {
             setName(updatedUser.name);
             setEmail(updatedUser.email);
         }
+    }
+
+    public boolean matchId(Long inputId) {
+        if (inputId == null) {
+            return false;
+        }
+        return this.id.equals(inputId);
+    }
+
+    public boolean matchPassword(User inputUser) {
+        if (inputUser == null) {
+            return false;
+        }
+        return this.password.equals(inputUser.password);
+    }
+
+    public boolean matchUserId(String inputUserId) {
+        if (inputUserId == null) {
+            return false;
+        }
+        return this.userId.equals(inputUserId);
     }
 
     @Override
