@@ -1,5 +1,6 @@
 package codesquad.qna.question;
 
+import codesquad.util.Result;
 import codesquad.user.User;
 import codesquad.util.SessionUtil;
 import org.slf4j.Logger;
@@ -21,14 +22,14 @@ public class QuestionController {
 
     @GetMapping("/form")
     public String form(HttpSession session) {
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
+        if (!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
         return "/qna/form";
     }
 
     @PostMapping("")
     public String create(String title, String contents, HttpSession session) {
         log.debug("title : {}, contents : {}", title, contents);
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
+        if (!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
         questionRepository.save(new Question(SessionUtil.getUserFromSession(session), title, contents));
         return "redirect:/";
     }
@@ -41,30 +42,33 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable Long id, Model model) {
-        model.addAttribute("question" , questionRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+        model.addAttribute("question", questionRepository.findById(id).orElseThrow(IllegalArgumentException::new));
         return "/qna/show";
     }
 
     @GetMapping("/{id}/form")
     public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
-
-        User loginUser = SessionUtil.getUserFromSession(session);
         Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        if(!question.isSameWriter(loginUser)) throw new IllegalStateException("You can't access other user's info");
+        Result result = valid(session, question);
+        if (!result.isValid()) {
+            model.addAttribute("errorMessage", result.getErrorMessage());
+            return "/user/login";
+        }
 
-        model.addAttribute("question", questionRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+        model.addAttribute("question", question);
         return "/qna/updateForm";
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, Question updatedQuestion, HttpSession session) {
+    public String update(@PathVariable Long id, Question updatedQuestion, Model model, HttpSession session) {
         log.debug("updatedQuestion : {}", updatedQuestion);
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
 
-        User loginUser = SessionUtil.getUserFromSession(session);
         Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        if(!question.isSameWriter(loginUser)) throw new IllegalStateException("You can't access other user's info");
+        Result result = valid(session, question);
+        if (!result.isValid()) {
+            model.addAttribute("errorMessage", result.getErrorMessage());
+            return "/user/login";
+        }
 
         question.update(updatedQuestion);
         questionRepository.save(question);
@@ -72,14 +76,28 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id, HttpSession session) {
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
-
-        User loginUser = SessionUtil.getUserFromSession(session);
+    public String delete(@PathVariable Long id, Model model, HttpSession session) {
         Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        if(!question.isSameWriter(loginUser)) throw new IllegalStateException("You can't access other user's info");
+        Result result = valid(session, question);
+        if (!result.isValid()) {
+            model.addAttribute("errorMessage", result.getErrorMessage());
+            return "/user/login";
+        }
 
         questionRepository.delete(question);
         return "redirect:/";
+    }
+
+    private Result valid(HttpSession session, Question question) {
+        if (!SessionUtil.isLoginUser(session)) {
+            return Result.fail("You need login");
+        }
+
+        User loginUser = SessionUtil.getUserFromSession(session);
+        if (!question.isSameWriter(loginUser)) {
+            return Result.fail("You can't access other user's info");
+        }
+
+        return Result.ok();
     }
 }

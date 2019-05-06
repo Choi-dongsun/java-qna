@@ -1,5 +1,6 @@
 package codesquad.user;
 
+import codesquad.util.Result;
 import codesquad.util.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,26 +68,43 @@ public class UserController {
 
     @GetMapping("/{id}/form")
     public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
-        if(!SessionUtil.getUserFromSession(session).matchId(id)) {
-            throw new IllegalStateException("You can't access other user's info");
+        User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Result result = valid(session, user);
+        if (!result.isValid()) {
+            model.addAttribute("errorMessage", result.getErrorMessage());
+            return "/user/login";
         }
 
-        model.addAttribute("user", userRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+        model.addAttribute("user", user);
         return "/user/updateForm";
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, User updatedUser, HttpSession session) {
+    public String update(@PathVariable Long id, User updatedUser, Model model, HttpSession session) {
         log.debug("updatedUser : {}", updatedUser);
-        if(!SessionUtil.isLoginUser(session)) return "redirect:/users/loginForm";
-        if(!SessionUtil.getUserFromSession(session).matchId(id)) {
-            throw new IllegalStateException("You can't access other user's info");
-        }
 
         User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Result result = valid(session, user);
+        if (!result.isValid()) {
+            model.addAttribute("errorMessage", result.getErrorMessage());
+            return "/user/login";
+        }
+
         user.update(updatedUser);
         userRepository.save(user);
         return "redirect:/users";
+    }
+
+    private Result valid(HttpSession session, User user) {
+        if (!SessionUtil.isLoginUser(session)) {
+            return Result.fail("You need login");
+        }
+
+        User loginUser = SessionUtil.getUserFromSession(session);
+        if (!user.isSameUser(loginUser)) {
+            return Result.fail("You can't access other user's info");
+        }
+
+        return Result.ok();
     }
 }

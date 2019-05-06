@@ -81,6 +81,10 @@ public class User {
         return this.password.equals(inputUser.password);
     }
 
+    public boolean isSameUser(User inputUser) {
+        return matchId(inputUser.id);
+    }
+
     @Override
     public String toString() {
         return "User{" +
