@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class Answer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

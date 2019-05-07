@@ -84,7 +84,12 @@ public class QuestionController {
             return "/user/login";
         }
 
-        questionRepository.delete(question);
+        if (!question.checkDeletePossibility()) {
+            return String.format("redirect:/questions/%d", id);
+        }
+
+        question.delete();
+        questionRepository.save(question);
         return "redirect:/";
     }
 
@@ -100,4 +105,6 @@ public class QuestionController {
 
         return Result.ok();
     }
+
+
 }

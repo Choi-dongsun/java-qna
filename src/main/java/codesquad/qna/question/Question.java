@@ -11,19 +11,25 @@ import java.util.List;
 @Entity
 public class Question {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
+
     @Column(nullable = false, length = 30)
     private String title;
+
     @Lob
     private String contents;
     private LocalDateTime createDate; // hibernate 5.2부터는 timestamp 위한 추가설정 필요x
+
     @OneToMany(mappedBy = "question")
     @OrderBy("id ASC")
     private List<Answer> answers;
+
+    private boolean deleted;
 
     public Question() {
     }
@@ -34,6 +40,7 @@ public class Question {
         this.title = title;
         this.contents = contents;
         this.createDate = LocalDateTime.now();
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -83,9 +90,33 @@ public class Question {
         this.answers = answers;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public void update(Question updatedQuestion) {
         this.title = updatedQuestion.title;
         this.contents = updatedQuestion.contents;
+    }
+
+    public boolean checkDeletePossibility() {
+        if (answers.size() == 0) return true;
+        for (Answer a : answers) {
+            if(!a.isDeleted()) {
+                if(!a.isSameWriter(this.writer)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void delete() {
+        this.deleted = true;
+        for (Answer answer : answers) {
+            answer.delete();
+        }
     }
 
     public boolean isSameWriter(User loginUser) {
