@@ -27,6 +27,7 @@ public class Answer {
 
     private LocalDateTime createDate;
 
+    private boolean deleted;
 
     public Answer() {
     }
@@ -36,6 +37,7 @@ public class Answer {
         this.question = question;
         this.contents = contents;
         this.createDate = LocalDateTime.now();
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -69,8 +71,16 @@ public class Answer {
         return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public boolean isSameWriter(User loginUser) {
         return this.writer.equals(loginUser);
+    }
+
+    public void delete() {
+        this.deleted = true;
     }
 
     @Override

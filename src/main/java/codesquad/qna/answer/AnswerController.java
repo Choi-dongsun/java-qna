@@ -52,7 +52,8 @@ public class AnswerController {
             return "/user/login";
         }
 
-        answerRepository.delete(answer);
+        answer.delete();
+        answerRepository.save(answer);
         return String.format("redirect:/questions/%d/", questionId);
     }
 
