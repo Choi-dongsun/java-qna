@@ -38,6 +38,14 @@ public class Answer {
         this.createDate = LocalDateTime.now();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public User getWriter() {
         return writer;
     }
@@ -59,6 +67,10 @@ public class Answer {
             return "";
         }
         return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+    }
+
+    public boolean isSameWriter(User loginUser) {
+        return this.writer.equals(loginUser);
     }
 
     @Override

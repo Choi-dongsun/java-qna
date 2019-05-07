@@ -95,7 +95,7 @@ public class QuestionController {
 
         User loginUser = SessionUtil.getUserFromSession(session);
         if (!question.isSameWriter(loginUser)) {
-            return Result.fail("You can't access other user's info");
+            return Result.fail("You can't access other user's question");
         }
 
         return Result.ok();
