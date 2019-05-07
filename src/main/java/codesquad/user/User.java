@@ -1,14 +1,12 @@
 package codesquad.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 20, unique = true)
     private String userId;
@@ -80,11 +78,8 @@ public class User {
         return this.password.equals(inputUser.password);
     }
 
-    public boolean matchUserId(String inputUserId) {
-        if (inputUserId == null) {
-            return false;
-        }
-        return this.userId.equals(inputUserId);
+    public boolean isSameUser(User inputUser) {
+        return matchId(inputUser.id);
     }
 
     @Override
@@ -96,5 +91,18 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
