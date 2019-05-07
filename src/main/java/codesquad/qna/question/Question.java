@@ -1,10 +1,12 @@
 package codesquad.qna.question;
 
+import codesquad.qna.answer.Answer;
 import codesquad.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 public class Question {
@@ -19,7 +21,9 @@ public class Question {
     @Lob
     private String contents;
     private LocalDateTime createDate; // hibernate 5.2부터는 timestamp 위한 추가설정 필요x
-
+    @OneToMany(mappedBy = "question")
+    @OrderBy("id ASC")
+    private List<Answer> answers;
 
     public Question() {
     }
@@ -69,6 +73,14 @@ public class Question {
             return "";
         }
         return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public void update(Question updatedQuestion) {
