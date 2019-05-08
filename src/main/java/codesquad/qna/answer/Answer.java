@@ -81,6 +81,7 @@ public class Answer {
 
     public void delete() {
         this.deleted = true;
+        question.deleteAnswer();
     }
 
     @Override

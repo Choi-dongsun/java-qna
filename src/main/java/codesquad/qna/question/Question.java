@@ -31,6 +31,8 @@ public class Question {
 
     private boolean deleted;
 
+    private int countOfAnswer = 0;
+
     public Question() {
     }
 
@@ -94,6 +96,14 @@ public class Question {
         return deleted;
     }
 
+    public int getCountOfAnswer() {
+        return countOfAnswer;
+    }
+
+    public void setCountOfAnswer(int countOfAnswer) {
+        this.countOfAnswer = countOfAnswer;
+    }
+
     public void update(Question updatedQuestion) {
         this.title = updatedQuestion.title;
         this.contents = updatedQuestion.contents;
@@ -117,10 +127,23 @@ public class Question {
         for (Answer answer : answers) {
             answer.delete();
         }
+        deleteAllAnswer();
     }
 
     public boolean isSameWriter(User loginUser) {
         return this.writer.equals(loginUser);
+    }
+
+    public void addAnswer() {
+        this.countOfAnswer++;
+    }
+
+    public void deleteAnswer() {
+        this.countOfAnswer--;
+    }
+
+    public void deleteAllAnswer() {
+        this.countOfAnswer = 0;
     }
 
     @Override

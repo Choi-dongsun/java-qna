@@ -37,6 +37,7 @@ public class AnswerController {
         Question question = questionRepository.findById(questionId).orElseThrow(IllegalArgumentException::new);
         Answer answer = new Answer(loginUser, question, contents);
 
+        question.addAnswer();
         answerRepository.save(answer);
         return String.format("redirect:/questions/%d", questionId);
     }
