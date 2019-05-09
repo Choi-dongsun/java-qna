@@ -28,19 +28,20 @@ public class AnswerController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @PostMapping()
-    public String create(@PathVariable Long questionId, String contents, HttpSession session) {
-        if (!SessionUtil.isLoginUser(session)) {
-            return "/users/loginForm";
-        }
-        User loginUser = SessionUtil.getUserFromSession(session);
-        Question question = questionRepository.findById(questionId).orElseThrow(IllegalArgumentException::new);
-        Answer answer = new Answer(loginUser, question, contents);
-
-        question.addAnswer();
-        answerRepository.save(answer);
-        return String.format("redirect:/questions/%d", questionId);
-    }
+//    ApiAnswerController로 대체
+//    @PostMapping()
+//    public String create(@PathVariable Long questionId, String contents, HttpSession session) {
+//        if (!SessionUtil.isLoginUser(session)) {
+//            return "/users/loginForm";
+//        }
+//        User loginUser = SessionUtil.getUserFromSession(session);
+//        Question question = questionRepository.findById(questionId).orElseThrow(IllegalArgumentException::new);
+//        Answer answer = new Answer(loginUser, question, contents);
+//
+//        question.addAnswer();
+//        answerRepository.save(answer);
+//        return String.format("redirect:/questions/%d", questionId);
+//    }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long questionId, @PathVariable Long id, Model model, HttpSession session) {

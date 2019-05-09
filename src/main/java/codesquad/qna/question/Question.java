@@ -2,6 +2,7 @@ package codesquad.qna.question;
 
 import codesquad.qna.answer.Answer;
 import codesquad.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class Question {
 
     @OneToMany(mappedBy = "question")
     @OrderBy("id ASC")
+    @JsonIgnore
     private List<Answer> answers;
 
     private boolean deleted;

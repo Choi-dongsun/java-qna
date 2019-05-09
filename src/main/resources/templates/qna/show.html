@@ -79,14 +79,14 @@
                           </article>
                           {{/deleted}}
                           {{/answers}}
-                          <form class="submit-write" method="post" action="/questions/{{id}}/answers">
-                              <div class="form-group" style="padding:14px;">
-                                  <textarea class="form-control" placeholder="Update your status" name="contents"></textarea>
-                              </div>
-                              <button class="btn btn-success pull-right" type="submit">답변하기</button>
-                              <div class="clearfix" />
-                          </form>
                       </div>
+                      <form class="answer-write" method="post" action="/api/questions/{{id}}/answers">
+                          <div class="form-group" style="padding:14px;">
+                              <textarea class="form-control" placeholder="Update your status" name="contents"></textarea>
+                          </div>
+                          <button class="btn btn-success pull-right" type="submit">답변하기</button>
+                          <div class="clearfix" />
+                      </form>
                   </div>
               </div>
           </div>
