@@ -3,14 +3,13 @@ package codesquad.qna.answer;
 import codesquad.qna.question.Question;
 import codesquad.qna.question.QuestionRepository;
 import codesquad.user.User;
+import codesquad.util.Result;
 import codesquad.util.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,5 +35,23 @@ public class ApiAnswerController {
         Answer answer = new Answer(loginUser, question, contents);
         question.addAnswer();
         return answerRepository.save(answer);
+    }
+
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Long questionId, @PathVariable Long id, HttpSession session) {
+        log.debug("questionId : {}, answerId : {}", questionId, id);
+        if (!SessionUtil.isLoginUser(session)) {
+            return Result.fail("You need login");
+        }
+
+        Answer answer = answerRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        User loginUser = SessionUtil.getUserFromSession(session);
+        if (!answer.isSameWriter(loginUser)) {
+            return Result.fail("You can't access other user's answer");
+        }
+
+        answer.delete();
+        answerRepository.save(answer);
+        return Result.ok();
     }
 }

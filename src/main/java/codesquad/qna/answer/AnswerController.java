@@ -28,7 +28,7 @@ public class AnswerController {
     @Autowired
     private QuestionRepository questionRepository;
 
-//    ApiAnswerController로 대체
+//    ApiAnswerController create()로 대체
 //    @PostMapping()
 //    public String create(@PathVariable Long questionId, String contents, HttpSession session) {
 //        if (!SessionUtil.isLoginUser(session)) {
@@ -43,32 +43,33 @@ public class AnswerController {
 //        return String.format("redirect:/questions/%d", questionId);
 //    }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long questionId, @PathVariable Long id, Model model, HttpSession session) {
-        log.debug("questionId : {}, answerId : {}", questionId, id);
+//    ApiAnswerController delete()로 대체
+//    @DeleteMapping("/{id}")
+//    public String delete(@PathVariable Long questionId, @PathVariable Long id, Model model, HttpSession session) {
+//        log.debug("questionId : {}, answerId : {}", questionId, id);
+//
+//        Answer answer = answerRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+//        Result result = valid(session, answer);
+//        if (!result.isValid()) {
+//            model.addAttribute("errorMessage", result.getErrorMessage());
+//            return "/user/login";
+//        }
+//
+//        answer.delete();
+//        answerRepository.save(answer);
+//        return String.format("redirect:/questions/%d/", questionId);
+//    }
 
-        Answer answer = answerRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        Result result = valid(session, answer);
-        if (!result.isValid()) {
-            model.addAttribute("errorMessage", result.getErrorMessage());
-            return "/user/login";
-        }
-
-        answer.delete();
-        answerRepository.save(answer);
-        return String.format("redirect:/questions/%d/", questionId);
-    }
-
-    private Result valid(HttpSession session, Answer answer) {
-        if (!SessionUtil.isLoginUser(session)) {
-            return Result.fail("You need login");
-        }
-
-        User loginUser = SessionUtil.getUserFromSession(session);
-        if (!answer.isSameWriter(loginUser)) {
-            return Result.fail("You can't access other user's answer");
-        }
-
-        return Result.ok();
-    }
+//    private Result valid(HttpSession session, Answer answer) {
+//        if (!SessionUtil.isLoginUser(session)) {
+//            return Result.fail("You need login");
+//        }
+//
+//        User loginUser = SessionUtil.getUserFromSession(session);
+//        if (!answer.isSameWriter(loginUser)) {
+//            return Result.fail("You can't access other user's answer");
+//        }
+//
+//        return Result.ok();
+//    }
 }
