@@ -1,5 +1,5 @@
 $(".answer-write button[type=submit]").click(addAnswer);
-$(document).on('click', '.link-delete-article', deleteAnswer); // 위와 달리 동적으로 생성된 html도 바인딩 가능
+$(document).on('click', '.link-delete-article-answer', deleteAnswer); // 위와 달리 동적으로 생성된 html도 바인딩 가능
 
 function addAnswer(e) {
     e.preventDefault(); // form의 action로 전송하려던 것을 막는다

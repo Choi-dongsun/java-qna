@@ -1,7 +1,9 @@
-package codesquad.user;
+package codesquad.web;
 
+import codesquad.domain.user.User;
+import codesquad.domain.user.UserRepository;
 import codesquad.util.Result;
-import codesquad.util.SessionUtil;
+import codesquad.security.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
-import static codesquad.util.SessionUtil.USER_SESSION_KEY;
+import static codesquad.security.SessionUtil.USER_SESSION_KEY;
 
 @Controller
 @RequestMapping("/users")

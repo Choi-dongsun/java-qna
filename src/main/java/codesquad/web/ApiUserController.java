@@ -1,5 +1,7 @@
-package codesquad.user;
+package codesquad.web;
 
+import codesquad.domain.user.User;
+import codesquad.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

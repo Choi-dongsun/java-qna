@@ -1,16 +1,13 @@
-package codesquad.user;
+package codesquad.domain.user;
 
+import support.domain.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class User extends AbstractEntity {
     @Column(nullable = false, length = 20, unique = true)
     private String userId;
 
@@ -23,14 +20,6 @@ public class User {
 
     @Column(nullable = false, length = 30)
     private String email;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserId() {
         return userId;
@@ -71,7 +60,7 @@ public class User {
         if (inputId == null) {
             return false;
         }
-        return this.id.equals(inputId);
+        return this.getId().equals(inputId);
     }
 
     public boolean matchPassword(User inputUser) {
@@ -82,30 +71,17 @@ public class User {
     }
 
     public boolean isSameUser(User inputUser) {
-        return matchId(inputUser.id);
+        return matchId(inputUser.getId());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", userId='" + userId + '\'' +
+                super.toString() +
+                "userId='" + userId + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

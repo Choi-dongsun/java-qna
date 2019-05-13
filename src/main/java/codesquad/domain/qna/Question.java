@@ -1,20 +1,14 @@
-package codesquad.qna.question;
+package codesquad.domain.qna;
 
-import codesquad.qna.answer.Answer;
-import codesquad.user.User;
+import codesquad.domain.user.User;
+import support.domain.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
-public class Question {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Question extends AbstractEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
@@ -24,7 +18,6 @@ public class Question {
 
     @Lob
     private String contents;
-    private LocalDateTime createDate; // hibernate 5.2부터는 timestamp 위한 추가설정 필요x
 
     @OneToMany(mappedBy = "question")
     @OrderBy("id ASC")
@@ -43,16 +36,7 @@ public class Question {
         this.writer = writer;
         this.title = title;
         this.contents = contents;
-        this.createDate = LocalDateTime.now();
         this.deleted = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getWriter() {
@@ -77,13 +61,6 @@ public class Question {
 
     public void setContents(String contents) {
         this.contents = contents;
-    }
-
-    public String getFormattedCreateDate() {
-        if (createDate == null) {
-            return "";
-        }
-        return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
     }
 
     public List<Answer> getAnswers() {
@@ -114,8 +91,8 @@ public class Question {
     public boolean checkDeletePossibility() {
         if (answers.size() == 0) return true;
         for (Answer a : answers) {
-            if(!a.isDeleted()) {
-                if(!a.isSameWriter(this.writer)) {
+            if (!a.isDeleted()) {
+                if (!a.isSameWriter(this.writer)) {
                     return false;
                 }
             }
@@ -150,11 +127,14 @@ public class Question {
 
     @Override
     public String toString() {
-        return "question{" +
-                "id='" + id + '\'' +
-                ", writer='" + writer + '\'' +
+        return "Question{" +
+                super.toString() +
+                "writer=" + writer +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
+                ", answers=" + answers +
+                ", deleted=" + deleted +
+                ", countOfAnswer=" + countOfAnswer +
                 '}';
     }
 }

@@ -1,14 +1,15 @@
-package codesquad.qna.answer;
+package codesquad.web;
 
-import codesquad.qna.question.Question;
-import codesquad.qna.question.QuestionRepository;
-import codesquad.user.User;
+import codesquad.domain.qna.Answer;
+import codesquad.domain.qna.AnswerRepository;
+import codesquad.domain.qna.Question;
+import codesquad.domain.qna.QuestionRepository;
+import codesquad.domain.user.User;
 import codesquad.util.Result;
-import codesquad.util.SessionUtil;
+import codesquad.security.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @RestController // rest를 붙이면 각 메서드 반환값을 json으로 변환하여 뱉도록 만든다.
 @RequestMapping("/api/questions/{questionId}/answers")
 public class ApiAnswerController {
-    private static final Logger log = LoggerFactory.getLogger(AnswerController.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiAnswerController.class);
 
     @Autowired
     private AnswerRepository answerRepository;

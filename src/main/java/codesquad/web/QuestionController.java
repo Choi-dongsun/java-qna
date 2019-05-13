@@ -1,8 +1,10 @@
-package codesquad.qna.question;
+package codesquad.web;
 
+import codesquad.domain.qna.Question;
+import codesquad.domain.qna.QuestionRepository;
 import codesquad.util.Result;
-import codesquad.user.User;
-import codesquad.util.SessionUtil;
+import codesquad.domain.user.User;
+import codesquad.security.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

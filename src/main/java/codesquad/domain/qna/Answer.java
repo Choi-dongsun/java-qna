@@ -1,19 +1,12 @@
-package codesquad.qna.answer;
+package codesquad.domain.qna;
 
-import codesquad.qna.question.Question;
-import codesquad.user.User;
+import support.domain.AbstractEntity;
+import codesquad.domain.user.User;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 @Entity
-public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Answer extends AbstractEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_writer"))
     private User writer;
@@ -25,8 +18,6 @@ public class Answer {
     @Lob
     private String contents;
 
-    private LocalDateTime createDate;
-
     private boolean deleted;
 
     public Answer() {
@@ -36,16 +27,7 @@ public class Answer {
         this.writer = writer;
         this.question = question;
         this.contents = contents;
-        this.createDate = LocalDateTime.now();
         this.deleted = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getWriter() {
@@ -72,13 +54,6 @@ public class Answer {
         this.contents = contents;
     }
 
-    public String getFormattedCreateDate() {
-        if (createDate == null) {
-            return "";
-        }
-        return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -93,26 +68,13 @@ public class Answer {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Answer answer = (Answer) o;
-        return Objects.equals(id, answer.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
     public String toString() {
         return "Answer{" +
-                "id=" + id +
-                ", writer=" + writer +
-                ", contents='" + contents + '\'' +
-                ", createDate=" + createDate +
+                super.toString() +
+                "writer=" + writer +
                 ", question=" + question +
+                ", contents='" + contents + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }
