@@ -16,7 +16,7 @@
                       <div class="article-header-text">
                           <a href="/users/92/kimmunsu" class="article-author-name">{{writer.userId}}</a>
                           <a href="/questions/413" class="article-header-time" title="퍼머링크">
-                              {{formattedCreateDate}}
+                              (생성일 : {{formattedCreateDate}} / 수정일 : {{formattedModifiedDate}})
                               <i class="icon-link"></i>
                           </a>
                       </div>
@@ -56,7 +56,7 @@
                                   <div class="article-header-text">
                                       <a href="/users/{{writer.id}}" class="article-author-name">{{writer.userId}}</a>
                                       <a href="#answer-1434" class="article-header-time" title="퍼머링크">
-                                          {{formattedCreateDate}}
+                                          (생성일 : {{formattedCreateDate}} / 수정일 : {{formattedModifiedDate}})
                                       </a>
                                   </div>
                               </div>
@@ -104,15 +104,15 @@
 			</div>
 		</div>
 		<div class="article-doc comment-doc">
-			{2}
+			(생성일 : {2} / 수정일 : {3})
 		</div>
 		<div class="article-util">
 		<ul class="article-util-list">
 			<li>
-				<a class="link-modify-article-answer" href="/api/qna/updateAnswer/{3}">수정</a>
+				<a class="link-modify-article-answer" href="/api/qna/updateAnswer/{4}">수정</a>
 			</li>
 			<li>
-                <a class="link-delete-article-answer" href="/api/questions/{4}/answers/{3}">삭제</a>
+                <a class="link-delete-article-answer" href="/api/questions/{5}/answers/{4}">삭제</a>
 			</li>
 		</ul>
 		</div>

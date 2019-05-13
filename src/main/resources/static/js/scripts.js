@@ -29,7 +29,7 @@ function addAnswer(e) {
         console.log(status);
 
         var answerTemplate = $("#answerTemplate").html();
-        var template = answerTemplate.format(data.writer.userId, data.formattedCreateDate, data.contents, data.id, data.question.id);
+        var template = answerTemplate.format(data.writer.userId, data.formattedCreateDate, data.formattedModifiedDate, data.contents, data.id, data.question.id);
         $(".qna-comment-slipp-articles").append(template);
         $(".answer-write textarea").val("");
     }
