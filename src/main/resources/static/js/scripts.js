@@ -1,5 +1,6 @@
 $(".answer-write button[type=submit]").click(addAnswer);
 $(document).on('click', '.link-delete-article-answer', deleteAnswer); // 위와 달리 동적으로 생성된 html도 바인딩 가능
+$(document).on("click", ".link-modify-article-answer", showModifyAnswer);
 
 function addAnswer(e) {
     e.preventDefault(); // form의 action로 전송하려던 것을 막는다
@@ -66,6 +67,37 @@ function deleteAnswer(e) {
         }
     });
 
+}
+
+function showModifyAnswer(e) {
+    e.preventDefault();
+    console.log("this : " + this);
+
+    var modifyBtn = $(this);
+    var url = modifyBtn.attr("href");
+
+    $.ajax({
+        type: 'get',
+        url: url,
+        dataType: 'json',
+        error: function (xhr, status) {
+            console.log(status);
+        },
+        success: function (data, status) {
+            console.log(data);
+
+            if (data.valid) {
+                var content = $("#comment_" + data.data.id).text().trim();
+                var edit = $('<textarea class="form-control" id="answer-contents-' + data.data.id + '"' + ' name="contents"></textarea>').val(content);
+                $("#comment_" + data.data.id).replaceWith(edit);
+
+                var str = '<button class="link-modify-submit-article" id="answer-modify-submit" href="/api/questions/' + data.data.question.id + '/answers/' + data.data.id + '/form">수정 후 등록</button>';
+                $('#modify-article-' + data.data.id).replaceWith(str);
+            } else {
+                alert(data.errorMessage);
+            }
+        }
+    });
 }
 
 String.prototype.format = function () {

@@ -10,6 +10,7 @@ import codesquad.security.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -53,5 +54,20 @@ public class ApiAnswerController {
 
         answer.delete();
         return Result.ok(answerRepository.save(answer));
+    }
+
+    @GetMapping("/{id}/form")
+    public Result updateForm(@PathVariable Long questionId, @PathVariable Long id, HttpSession session, Model model) {
+        if (!SessionUtil.isLoginUser(session)) {
+            return Result.fail("You need login");
+        }
+
+        Answer answer = answerRepository.findById(id).get();
+        User loginUser = SessionUtil.getUserFromSession(session);
+        if (!answer.isSameWriter(loginUser)) {
+            return Result.fail("You can't access other user's answer");
+        }
+
+        return Result.ok(answer);
     }
 }

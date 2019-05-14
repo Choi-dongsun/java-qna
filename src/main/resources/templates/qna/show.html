@@ -60,13 +60,13 @@
                                       </a>
                                   </div>
                               </div>
-                              <div class="article-doc comment-doc">
+                              <div class="article-doc comment-doc" id="comment_{{id}}">
                                   <p>{{contents}}</p>
                               </div>
                               <div class="article-util">
                                   <ul class="article-util-list">
                                       <li>
-                                          <a class="link-modify-article-answer" href="/questions/413/answers/1405/form">수정</a>
+                                          <a class="link-modify-article-answer" id="modify-article-{{id}}" href="/api/questions/{{question.id}}/answers/{{id}}/form">수정</a>
                                       </li>
                                       <li>
                                           <a class="link-delete-article-answer" href="/api/questions/{{question.id}}/answers/{{id}}">삭제</a>
@@ -103,13 +103,13 @@
 				<div class="article-header-time">(생성일 : {1} / 수정일 : {2})</div>
 			</div>
 		</div>
-		<div class="article-doc comment-doc">
+		<div class="article-doc comment-doc" id="comment_{4}">
 			{3}
 		</div>
 		<div class="article-util">
 		<ul class="article-util-list">
 			<li>
-				<a class="link-modify-article-answer" href="/api/qna/updateAnswer/{4}">수정</a>
+				<a class="link-modify-article-answer" id="modify-article-{4}" href="/api/questions/{5}/answers/{4}/form">수정</a>
 			</li>
 			<li>
                 <a class="link-delete-article-answer" href="/api/questions/{5}/answers/{4}">삭제</a>
