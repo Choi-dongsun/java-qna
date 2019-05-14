@@ -104,7 +104,7 @@ public class QuestionController {
             return Result.fail("You can't access other user's question");
         }
 
-        return Result.ok();
+        return Result.ok(question);
     }
 
 

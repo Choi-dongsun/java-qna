@@ -107,6 +107,6 @@ public class UserController {
             return Result.fail("You can't access other user's info");
         }
 
-        return Result.ok();
+        return Result.ok(user);
     }
 }

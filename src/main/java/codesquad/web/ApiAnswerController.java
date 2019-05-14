@@ -26,16 +26,16 @@ public class ApiAnswerController {
     private QuestionRepository questionRepository;
 
     @PostMapping()
-    public Answer create(@PathVariable Long questionId, String contents, HttpSession session) {
+    public Result<Answer> create(@PathVariable Long questionId, String contents, HttpSession session) {
         if (!SessionUtil.isLoginUser(session)) {
-            return null;
+            return Result.fail("You need login");
         }
 
         User loginUser = SessionUtil.getUserFromSession(session);
         Question question = questionRepository.findById(questionId).orElseThrow(IllegalArgumentException::new);
         Answer answer = new Answer(loginUser, question, contents);
         question.addAnswer();
-        return answerRepository.save(answer);
+        return Result.ok(answerRepository.save(answer));
     }
 
     @DeleteMapping("/{id}")
@@ -52,7 +52,6 @@ public class ApiAnswerController {
         }
 
         answer.delete();
-        answerRepository.save(answer);
-        return Result.ok();
+        return Result.ok(answerRepository.save(answer));
     }
 }

@@ -27,11 +27,17 @@ function addAnswer(e) {
     // 이곳의 data는 ApiController(RestController)의 메서드가 반환한 answer를 변환한 json 데이터를 의미함.
     function onSuccess(data, status) {
         console.log(status);
+        console.log(data);
 
-        var answerTemplate = $("#answerTemplate").html();
-        var template = answerTemplate.format(data.writer.userId, data.formattedCreateDate, data.formattedModifiedDate, data.contents, data.id, data.question.id);
-        $(".qna-comment-slipp-articles").append(template);
-        $(".answer-write textarea").val("");
+        if (data.valid) {
+            var answerTemplate = $("#answerTemplate").html();
+            var template = answerTemplate.format(data.data.writer.userId, data.data.formattedCreateDate, data.data.formattedModifiedDate, data.data.contents, data.data.id, data.data.question.id);
+            $(".qna-comment-slipp-articles").append(template);
+            $(".answer-write textarea").val("");
+        } else {
+            alert(data.errorMessage)
+
+        }
     }
 }
 
