@@ -2,9 +2,9 @@ package codesquad.web;
 
 import codesquad.domain.qna.Question;
 import codesquad.domain.qna.QuestionRepository;
-import codesquad.util.Result;
 import codesquad.domain.user.User;
 import codesquad.security.SessionUtil;
+import codesquad.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,8 @@ public class QuestionController {
     }
 
     @GetMapping("")
-    public String list(Model model) {
-        model.addAttribute("questions", questionRepository.findAll());
-        return "/index";
+    public String list(){
+        return "redirect:/";
     }
 
     @GetMapping("/{id}")

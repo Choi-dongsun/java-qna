@@ -52,7 +52,7 @@ function deleteAnswer(e) {
         success: function (data, status) {
             console.log(status);
 
-            if(data.valid) {
+            if (data.valid) {
                 deleteBtn.closest("article").remove();
             } else {
                 alert(data.errorMessage)
@@ -71,3 +71,9 @@ String.prototype.format = function () {
             ;
     });
 };
+
+var pageSize = $("span[id^='pages']").length; // pages (List<Integer>) 의 길이를 구한다
+for (var i = 0; i < pageSize; i++) { // 그 길이만큼 포문 돌림
+    var cur = parseInt($("span[id^='pages']:eq(" + i + ")").html()); // 해당 span의 요소를 .html()로 가져온 뒤, 정수로 변경
+    $("span[id^='pages']:eq(" + i + ")").html(cur + 1); // 해당 span의 요소 값을 .html(param)의 인자로 변경한다.
+}
