@@ -8,8 +8,8 @@
     </appender>
 
 <!--     자바 패키지별 level 설정 -->
-    <logger name="codesquad.qna" level="DEBUG" />
-    <logger name="codesquad.user" level="DEBUG" />
+    <logger name="codesquad.domain" level="DEBUG" />
+    <logger name="codesquad.web" level="DEBUG" />
 
     <!-- 기본 level 설정 -->
     <root level="INFO">

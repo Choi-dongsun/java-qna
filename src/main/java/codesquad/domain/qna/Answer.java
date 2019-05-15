@@ -67,6 +67,10 @@ public class Answer extends AbstractEntity {
         question.deleteAnswer();
     }
 
+    public void update(String contents) {
+        this.contents = contents;
+    }
+
     @Override
     public String toString() {
         return "Answer{" +

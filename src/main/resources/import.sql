@@ -6,6 +6,34 @@ INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date
 INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (3, '1', '무빙이 첫 질문', '무빙이 첫 질문 내용', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 1);
 INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (4, '1', '무빙이 두번째 질문(최신 글)', '무빙이 두번째 질문 내용', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
 
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (5, '1', '5번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (6, '1', '6번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (7, '1', '7번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (8, '1', '8번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (9, '1', '9번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (10, '1', '10번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (11, '1', '11번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (12, '1', '12번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (13, '1', '13번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (14, '1', '14번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (15, '1', '15번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (16, '1', '16번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (17, '1', '17번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (18, '1', '18번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (19, '1', '19번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (20, '1', '20번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (21, '1', '21번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (22, '1', '22번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (23, '1', '23번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (24, '1', '24번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (25, '1', '25번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (26, '1', '26번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (27, '1', '27번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (28, '1', '28번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (29, '1', '29번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (30, '1', '30번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+INSERT INTO QUESTION (id, writer_id, title, contents, create_date, modified_date, deleted, count_of_answer) VALUES (31, '2', '31번 글', '내용입니다.', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0, 0);
+
 INSERT INTO ANSWER (id, writer_id, question_id, contents, create_date, modified_date, deleted) VALUES (1, 1, 1, '징고 첫 질문의 무빙이 답변',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO ANSWER (id, writer_id, question_id, contents, create_date, modified_date, deleted) VALUES (2, 2, 1, '징고 첫 질문의 징고 스스로 답변',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
 INSERT INTO ANSWER (id, writer_id, question_id, contents, create_date, modified_date, deleted) VALUES (3, 1, 2, '징고 두번째 질문의 무빙이 답변',  CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 0);
