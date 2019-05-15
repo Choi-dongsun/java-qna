@@ -104,6 +104,10 @@ public class QuestionController {
             return Result.fail("You can't access other user's question");
         }
 
+        if(question.isDeleted()) {
+            return Result.fail("You can't access deleted question");
+        }
+
         return Result.ok(question);
     }
 }

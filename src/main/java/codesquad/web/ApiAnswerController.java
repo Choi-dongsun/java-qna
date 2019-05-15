@@ -82,6 +82,10 @@ public class ApiAnswerController {
             return Result.fail("You can't access other user's answer");
         }
 
+        if(answer.isDeleted()) {
+            return Result.fail("You can't access deleted answer");
+        }
+
         return Result.ok(answer);
     }
 }
