@@ -106,6 +106,4 @@ public class QuestionController {
 
         return Result.ok(question);
     }
-
-
 }

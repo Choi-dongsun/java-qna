@@ -1,16 +1,13 @@
 $(".answer-write button[type=submit]").click(addAnswer);
 $(document).on('click', '.link-delete-article-answer', deleteAnswer); // 위와 달리 동적으로 생성된 html도 바인딩 가능
 $(document).on("click", ".link-modify-article-answer", showModifyAnswer);
+$(document).on("click", "#answer-modify-submit", modifyAnswer);
 
 function addAnswer(e) {
     e.preventDefault(); // form의 action로 전송하려던 것을 막는다
-    console.log("click!!");
 
     var queryString = $(".answer-write").serialize(); // 원래 전송하려던 녀석을 변수에 담는다.
-    console.log("query : " + queryString);
-
     var url = $(".answer-write").attr("action");
-    console.log("url : " + url);
 
     $.ajax({
         type: 'post',
@@ -44,7 +41,6 @@ function addAnswer(e) {
 
 function deleteAnswer(e) {
     e.preventDefault();
-    console.log("click!!");
 
     var deleteBtn = $(this); // scope마다 this가 다를 수 있으니 변수처리
     var url = $(this).attr("href");
@@ -71,7 +67,6 @@ function deleteAnswer(e) {
 
 function showModifyAnswer(e) {
     e.preventDefault();
-    console.log("this : " + this);
 
     var modifyBtn = $(this);
     var url = modifyBtn.attr("href");
@@ -84,7 +79,7 @@ function showModifyAnswer(e) {
             console.log(status);
         },
         success: function (data, status) {
-            console.log(data);
+            console.log(status);
 
             if (data.valid) {
                 var content = $("#comment_" + data.data.id).text().trim();
@@ -93,6 +88,37 @@ function showModifyAnswer(e) {
 
                 var str = '<button class="link-modify-submit-article" id="answer-modify-submit" href="/api/questions/' + data.data.question.id + '/answers/' + data.data.id + '/form">수정 후 등록</button>';
                 $('#modify-article-' + data.data.id).replaceWith(str);
+            } else {
+                alert(data.errorMessage);
+            }
+        }
+    });
+}
+
+function modifyAnswer(e) {
+    e.preventDefault();
+
+    var modifyBtn = $(this);
+    var url = modifyBtn.attr("href");
+    var strings = url.split("/");
+    var content = $('#answer-contents-' + strings[5]).val();
+    var queryString = 'contents=' + content;
+
+    $.ajax({
+        type: 'PUT',
+        url: url,
+        data: queryString,
+        dataType: 'json',
+        error: function (xhr, status) {
+            console.log(status);
+        },
+        success: function (data, status) {
+            console.log(status);
+
+            if (data.valid) {
+                var answerTemplate = $("#answerTemplate").html();
+                var template = answerTemplate.format(data.data.writer.userId, data.data.formattedCreateDate, data.data.formattedModifiedDate, data.data.contents, data.data.id, data.data.question.id);
+                $("#answer-" + data.data.id).replaceWith(template);
             } else {
                 alert(data.errorMessage);
             }
